@@ -1,32 +1,61 @@
-const container = document.querySelector('.container');
+let userInput;
+let userWidth;
+let numberSquares;
+
+createContainer();
 
 
 
-function createSquare() {
+const boxButton = document.querySelector('#textBoxButton');
+boxButton.addEventListener('click', () => {
+    userInput = Number(document.getElementById('textBox').value);
+    userWidth = 800/userInput + 'px';
+    numberSquares = userInput*userInput;
+    createGrid(numberSquares, userWidth);
+    hover();
+
+})
+
+function createContainer() {
+    const container = document.createElement('div');
+    container.classList.add('container');
+    const body = document.querySelector('body')
+    body.appendChild(container);
+}
+
+function destroyContainer() {
+    const container = document.querySelector('.container');
+    container.remove();
+}
+
+function createSquare(userWidth) {
     const square = document.createElement('div');
     square.classList.add('square');
-    container.appendChild(square);
+    const containerRef = document.querySelector('.container');
+    containerRef.appendChild(square);
     square.style.display = 'flex';
     square.style.flex = '1 1 auto'
-    // square.style.height = '48px'
-    square.style.width = '10.5px'
-    square.style.border = '1px solid grey'
+    // square.style.width = '10.5px'
+    square.style.width = userWidth;
+    // square.style.border = '1px solid grey'
     square.style.backgroundColor = 'white'
+}
+function createGrid(numberSquares, userWidth) {
+    destroyContainer();
+    createContainer();
+    for (let i = 0; i < numberSquares; i++) { //creates grid out of squares
+        createSquare(userWidth);
+    }
+}
 
-}
-for (let i = 0; i < 4096; i++) { //creates 16x16 grid out of squares
-    createSquare();
-    
-}
 
 
 function hover() {
-    
-}
-const sqr = document.querySelectorAll('.square');
-sqr.forEach(item => {
+    const sqr = document.querySelectorAll('.square');
+    sqr.forEach(item => {
     item.addEventListener('mouseover' , function(event) {
         event.target.style.backgroundColor = 'blue';
     })
-
 });
+}
+
